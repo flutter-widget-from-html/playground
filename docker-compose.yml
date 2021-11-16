@@ -23,10 +23,9 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend.Dockerfile
-    environment:
-      PRE_NULL_SAFETY_SERVER_URL: http://playground.docker.local:18080/
-      NULL_SAFETY_SERVER_URL: http://playground.docker.local:28080/
+      context: frontend
+      args:
+        PRE_NULL_SAFETY_SERVER_URL: http://playground.docker.local:18080/
+        NULL_SAFETY_SERVER_URL: http://playground.docker.local:28080/
     ports:
       - '8000:8000'
