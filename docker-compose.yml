@@ -1,0 +1,49 @@
+version: '2'
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.1/24
+
+services:
+  backend1:
+    build:
+      context: backend
+      dockerfile: cloud_run.Dockerfile
+    environment:
+      PORT: 8080
+    links:
+      - redis
+    ports:
+      - '18080:8080'
+      - '18181:8181'
+
+  backend2:
+    build:
+      context: backend
+      dockerfile: cloud_run_null_safety.Dockerfile
+    environment:
+      PORT: 8080
+    links:
+      - redis
+    ports:
+      - '28080:8080'
+      - '28181:8181'
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    environment:
+      PRE_NULL_SAFETY_SERVER_URL: http://playground.docker.local:18080/
+      NULL_SAFETY_SERVER_URL: http://playground.docker.local:28080/
+    ports:
+      - '8000:8000'
+
+  redis:
+    image: redis:alpine
+    networks:
+      default:
+        ipv4_address: 10.0.0.4

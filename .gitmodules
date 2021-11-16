@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/flutter-widget-from-html/dart-services.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/flutter-widget-from-html/dart-pad.git
